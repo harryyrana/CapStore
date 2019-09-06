@@ -13,7 +13,7 @@ import javax.persistence.Table;
 public class Category {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "cat_seq_gen")
-	@SequenceGenerator(name = "cat_seq_gen", initialValue = 1, sequenceName = "cat_seq")
+	@SequenceGenerator(name = "cat_seq_gen", initialValue = 2000, sequenceName = "cat_seq")
 	private long categoryId;
 	@Column(length = 20)
 	private String categoryGender;

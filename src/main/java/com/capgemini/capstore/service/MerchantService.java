@@ -1,6 +1,6 @@
 package com.capgemini.capstore.service;
 
-import java.util.Optional;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,5 +28,14 @@ public class MerchantService implements IMerchantService {
 		// }
 
 	}
+
+	@Override
+	public List<Product> findByMerchantId(long merchantId) {
+		
+		System.out.println(merchantId);
+		
+		return productDao.findProductByMerchant(merchantId);
+	}
+	
 
 }
