@@ -2,12 +2,15 @@ package com.capgemini.capstore.beans;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+
+import com.capgemini.capstore.util.MerchantFeedbackStatus;
 
 @Entity
 @Table(name = "capstore_merchant_feedbacks")
@@ -21,8 +24,44 @@ public class MerchantFeedback {
 	private String response;
 	@Column(length = 256)
 	private String merchantFeedback;
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	private Merchant merchant;
+	private MerchantFeedbackStatus status;
+	private String adminComment;
+	@ManyToOne
+	private Customer customer;
+
+	public String getResponse() {
+		return response;
+	}
+
+	public void setResponse(String response) {
+		this.response = response;
+	}
+
+	public MerchantFeedbackStatus getStatus() {
+		return status;
+	}
+
+	public void setStatus(MerchantFeedbackStatus status) {
+		this.status = status;
+	}
+
+	public String getAdminComment() {
+		return adminComment;
+	}
+
+	public void setAdminComment(String adminComment) {
+		this.adminComment = adminComment;
+	}
+
+	public Customer getCustomer() {
+		return customer;
+	}
+
+	public void setCustomer(Customer customer) {
+		this.customer = customer;
+	}
 
 	public long getId() {
 		return id;
@@ -48,20 +87,19 @@ public class MerchantFeedback {
 		this.merchantFeedback = merchantFeedback;
 	}
 
-	public MerchantFeedback(long id, String merchantFeedback, Merchant merchant) {
+	public MerchantFeedback() {
+	}
+
+	public MerchantFeedback(long id, String response, String merchantFeedback, Merchant merchant,
+			MerchantFeedbackStatus status, String adminComment, Customer customer) {
 		super();
 		this.id = id;
+		this.response = response;
 		this.merchantFeedback = merchantFeedback;
 		this.merchant = merchant;
-	}
-
-	@Override
-	public String toString() {
-		return "MerchantFeedback [id=" + id + ", merchantFeedback=" + merchantFeedback + "]";
-	}
-
-	public MerchantFeedback() {
-
+		this.status = status;
+		this.adminComment = adminComment;
+		this.customer = customer;
 	}
 
 }

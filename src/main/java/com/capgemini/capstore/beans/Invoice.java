@@ -2,10 +2,11 @@ package com.capgemini.capstore.beans;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -20,9 +21,13 @@ public class Invoice {
 	private double adminDiscount;
 	@Column(length = 10)
 	private double finalAmount;
-	@OneToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	private Customer customer;
 
+	public Invoice() {
+		super();
+	}
+	
 	public long getInvoiceId() {
 		return invoiceId;
 	}

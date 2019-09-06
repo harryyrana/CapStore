@@ -2,11 +2,11 @@ package com.capgemini.capstore.beans;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -26,9 +26,9 @@ public class Product {
 	private double productPrice;
 	@Column(length = 10)
 	private double productDiscount;
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	private Merchant merchant;
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	private Category category;
 
 	public Product() {

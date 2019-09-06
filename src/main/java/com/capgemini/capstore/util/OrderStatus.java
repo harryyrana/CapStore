@@ -1,6 +1,5 @@
 package com.capgemini.capstore.util;
 
-public enum OrderStatus 
-{ 
-    BeingPrepared, Ready, Shipped, Delivered; 
-} 
+public enum OrderStatus {
+	PLACED, PACKED, SHIPPED, DELIVERED;
+}

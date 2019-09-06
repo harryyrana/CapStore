@@ -3,10 +3,11 @@ package com.capgemini.capstore.beans;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -19,9 +20,9 @@ public class WishList {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "wishlist_seq_gen")
 	@SequenceGenerator(name = "wishlist_seq_gen", initialValue = 10000, sequenceName = "wishlist_seq")
 	private long wishlistId;
-	@OneToOne
+	@OneToOne(fetch = FetchType.LAZY)
 	private Customer customer;
-	@OneToMany
+	@ManyToMany(fetch = FetchType.LAZY)
 	private List<Product> products;
 
 	public WishList() {

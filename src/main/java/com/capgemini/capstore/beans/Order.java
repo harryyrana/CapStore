@@ -1,14 +1,12 @@
 package com.capgemini.capstore.beans;
 
-import java.util.List;
-
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -22,15 +20,15 @@ public class Order {
 	private double discountTotal;
 	private int quantity;
 	private double totalAmount;
-	@ManyToOne(fetch = FetchType.LAZY)
+	@OneToOne(fetch = FetchType.LAZY)
 	private Invoice invoice;
-	@OneToMany(fetch = FetchType.LAZY)
-	private List<Product> products;
+	@ManyToOne(fetch = FetchType.LAZY)
+	private Product product;
 
 	@Override
 	public String toString() {
 		return "Order [orderId=" + orderId + ", discountTotal=" + discountTotal + ", quantity=" + quantity
-				+ ", totalAmount=" + totalAmount + ", invoice=" + invoice + "]";
+				+ ", totalAmount=" + totalAmount + "]";
 	}
 
 	public long getOrderId() {
@@ -65,21 +63,20 @@ public class Order {
 		this.totalAmount = totalAmount;
 	}
 
-	public Order(long orderId, double discountTotal, int quantity, double totalAmount,
-			Invoice invoice, List<Product> products) {
+	public Order(long orderId, double discountTotal, int quantity, double totalAmount, Invoice invoice,
+			Product product) {
 		super();
 		this.orderId = orderId;
 		this.discountTotal = discountTotal;
 		this.quantity = quantity;
 		this.totalAmount = totalAmount;
 		this.invoice = invoice;
-		this.products = products;
+		this.product = product;
 	}
 
 	public Order() {
 		super();
 	}
-
 
 	public Invoice getInvoice() {
 		return invoice;
@@ -89,12 +86,12 @@ public class Order {
 		this.invoice = invoice;
 	}
 
-	public List<Product> getProducts() {
-		return products;
+	public Product getProduct() {
+		return product;
 	}
 
-	public void setProducts(List<Product> products) {
-		this.products = products;
+	public void setProduct(Product product) {
+		this.product = product;
 	}
 
 }

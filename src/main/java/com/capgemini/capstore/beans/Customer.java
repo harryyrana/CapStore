@@ -10,7 +10,6 @@ import javax.persistence.Table;
 
 import com.capgemini.capstore.util.Status;
 
-
 @Entity
 @Table(name = "capstore_customers")
 public class Customer {
@@ -28,71 +27,14 @@ public class Customer {
 	@Column(length = 100)
 	private String customerAddress;
 	private Status customerStatus;
+	@Column(length = 20)
 	private int customerQuestion;
+	@Column(length = 50)
 	private String customerAnswer;
-	
 
 	public Customer() {
 		super();
 	}
-
-	
-    
-
-	@Override
-	public String toString() {
-		return "Customer [customerId=" + customerId + ", customerName=" + customerName + ", customerPassword="
-				+ customerPassword + ", customerContactNo=" + customerContactNo + ", customerAddress=" + customerAddress
-				+ ", customerStatus=" + customerStatus + ", customerQuestion=" + customerQuestion + ", customerAnswer="
-				+ customerAnswer + "]";
-	}
-	
-	
-
-
-
-
-	/**
-	 * @return the customerQuestion
-	 */
-
-	public int getCustomerQuestion() {
-		return customerQuestion;
-	}
-
-
-	/**
-	 * @param customerQuestion
-	 *            the customerQuestion to set
-	 */
-
-	public void setCustomerQuestion(int customerQuestion) {
-		this.customerQuestion = customerQuestion;
-	}
-
-	/**
-	 * @return the customerAnswer
-	 */
-
-
-	public String getCustomerAnswer() {
-		return customerAnswer;
-	}
-
-
-	/**
-	 * @param customerAnswer
-	 *            the customerAnswer to set
-	 */
-
-
-
-	public void setCustomerAnswer(String customerAnswer) {
-		this.customerAnswer = customerAnswer;
-	}
-
-
-
 
 	public Customer(long customerId, String customerName, String customerPassword, String customerContactNo,
 			String customerAddress, Status customerStatus, int customerQuestion, String customerAnswer) {
@@ -107,9 +49,21 @@ public class Customer {
 		this.customerAnswer = customerAnswer;
 	}
 
+	public int getCustomerQuestion() {
+		return customerQuestion;
+	}
 
+	public void setCustomerQuestion(int customerQuestion) {
+		this.customerQuestion = customerQuestion;
+	}
 
+	public String getCustomerAnswer() {
+		return customerAnswer;
+	}
 
+	public void setCustomerAnswer(String customerAnswer) {
+		this.customerAnswer = customerAnswer;
+	}
 	/**
 	 * @return the cutomerId
 	 */

@@ -30,7 +30,9 @@ public class Merchant {
 	private String merchantCompanyName;
 	private Status merchantStatus;
 	private long merchantDiscount;
+	@Column(length = 20)
 	private int merchantQuestion;
+	@Column(length = 20)
 	private String merchantAnswer;
 
 	/**
@@ -122,46 +124,8 @@ public class Merchant {
 	public void setMerchantCompanyName(String merchantCompanyName) {
 		this.merchantCompanyName = merchantCompanyName;
 	}
+
 	
-	
-	/**
-	 * @param merchantQuestion
-	 *            the merchantQuestion to get
-	 */
-
-	public int getMerchantQuestion() {
-		return merchantQuestion;
-	}
-	
-	/**
-	 * @param merchantQuestion
-	 *            the merchantQuestion to set
-	 */
-
-	public void setMerchantQuestion(int merchantQuestion) {
-		this.merchantQuestion = merchantQuestion;
-	}
-	
-	/**
-	 * @param merchantAnswer
-	 *            the merchantQuestion to get
-	 */
-
-	public String getMerchantAnswer() {
-		return merchantAnswer;
-	}
-	
-	/**
-	 * @param merchantAnswer
-	 *            the merchantQuestion to set
-	 */
-
-
-	public void setMerchantAnswer(String merchantAnswer) {
-		this.merchantAnswer = merchantAnswer;
-	}
-
-
 	@Override
 	public String toString() {
 		return "Merchant [merchantId=" + merchantId + ", merchantName=" + merchantName + ", merchantPassword="
@@ -175,11 +139,25 @@ public class Merchant {
 		super();
 	}
 
-	
+	public int getMerchantQuestion() {
+		return merchantQuestion;
+	}
 
-	public Merchant(long merchantId, String merchantName, String merchantPassword,
-			@Size(max = 10, min = 10) String merchantContactNo, String merchantGSTNo, String merchantCompanyName,
-			Status merchantStatus, long merchantDiscount, int merchantQuestion, String merchantAnswer) {
+	public void setMerchantQuestion(int merchantQuestion) {
+		this.merchantQuestion = merchantQuestion;
+	}
+
+	public String getMerchantAnswer() {
+		return merchantAnswer;
+	}
+
+	public void setMerchantAnswer(String merchantAnswer) {
+		this.merchantAnswer = merchantAnswer;
+	}
+
+	public Merchant(long merchantId, String merchantName, String merchantPassword, String merchantContactNo,
+			String merchantGSTNo, String merchantCompanyName, Status merchantStatus, long merchantDiscount,
+			int merchantQuestion, String merchantAnswer) {
 		super();
 		this.merchantId = merchantId;
 		this.merchantName = merchantName;

@@ -2,15 +2,19 @@ package com.capgemini.capstore.beans;
 
 import java.sql.Date;
 
+import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
 
 import com.capgemini.capstore.util.OrderStatus;
 
+@Entity
+@Table(name = "capstore_delivery_status")
 public class DeliveryStatus {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "del_seq_gen")
