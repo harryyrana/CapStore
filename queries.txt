@@ -1,0 +1,6 @@
+insert into capstore_merchants values(merchant_seq_gen.nextval,'dog','merchant','8693098441',20,'123456789','name','password',1,0);
+insert into capstore_merchants values(merchant_seq_gen.nextval,'cat','merchant2','869308442',10,'123456129','name2','password2',2,0);
+insert into capstore_category values(cat_seq.nextval,'male','shoes');
+insert into capstore_category values(cat_seq.nextval,'female','shoes');
+insert into capstore_customers values(cust_seq.nextval,'address','answer','8693098441','sats','password',1,0);
+insert into capstore_merchant_feedbacks values(merchant_feedback_seq.nextval,'admin comment','feedback','', '1',10000,10050);

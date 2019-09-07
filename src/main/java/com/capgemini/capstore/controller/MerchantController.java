@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.capgemini.capstore.beans.MerchantFeedback;
 import com.capgemini.capstore.beans.Product;
 import com.capgemini.capstore.service.IMerchantService;
 
@@ -44,6 +45,26 @@ public class MerchantController {
 	 @DeleteMapping(value = "/product/deleteProduct")
 	 public boolean deleteProduct(@RequestBody final Product product) {
 		 return merchantService.removeProduct(product);
+	 }
+	 
+	 @PutMapping(value = "/product/deleteProductQuantity/{productId}/{quantity}")
+	 public boolean deleteProductQuantity(@PathVariable final long productId,@PathVariable final int quantity) {
+		 return merchantService.deleteProductQuantity(quantity,productId);
+	 }
+	 
+	 @PutMapping(value = "/product/addProductQuantity/{productId}/{quantity}")
+	 public boolean addProductQuantity(@PathVariable final long productId,@PathVariable final int quantity) {
+		 return merchantService.addProductQuantity(quantity,productId);
+	 }
+	 
+	 @GetMapping(value = "/product/getMerchantFeedback/{merchantId}")
+	 public List<MerchantFeedback> getMerchantFeedback(@PathVariable final long merchantId) {
+		 return merchantService.getMerchantFeedback(merchantId);
+	 }
+	 
+	 @PutMapping(value = "/product/sendMerchantFeedback")
+	 public MerchantFeedback sendMerchantFeedback(@RequestBody final MerchantFeedback merchantFeedback) {
+		 return merchantService.sendMerchantFeedback(merchantFeedback);
 	 }
 	 
 	 

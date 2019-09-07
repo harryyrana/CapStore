@@ -5,7 +5,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -22,7 +22,7 @@ public class Order {
 	private double totalAmount;
 	@OneToOne(fetch = FetchType.LAZY)
 	private Invoice invoice;
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToMany(fetch = FetchType.LAZY)
 	private Product product;
 
 	@Override
