@@ -18,5 +18,8 @@ public interface ProductDao extends JpaRepository<Product, Long> {
 	
 	@Query("SELECT p FROM Product p WHERE p.merchant.merchantId = ?1")
 	List<Product> findProductByMerchant(long merchantId);
+	
+	@Query("SELECT p FROM Product p WHERE p.merchant.merchantId = ?1 and p.category.categoryType = ?2")
+	List<Product> searchProduct(long merchantId,String categoryType);
 //	
 }

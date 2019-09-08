@@ -144,6 +144,11 @@ public class MerchantService implements IMerchantService {
 				
 		return orderDao.getOrdersByMerchant(merchantId);
 	}
+
+	@Override
+	public List<Product> searchProducts(long merchantId, String categoryType) {
+		return productDao.searchProduct(merchantId, categoryType);
+	}
 	
 	
 	

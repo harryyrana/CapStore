@@ -26,5 +26,7 @@ public interface IMerchantService {
 	
 	List<Order> displayAllOrders(long merchantId);
 	
+	List<Product> searchProducts(long merchantId,String categoryType);
+	
 
 }

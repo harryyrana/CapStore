@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.capgemini.capstore.beans.Category;
 import com.capgemini.capstore.beans.MerchantFeedback;
 import com.capgemini.capstore.beans.Order;
 import com.capgemini.capstore.beans.Product;
@@ -68,9 +69,17 @@ public class MerchantController {
 		 return merchantService.sendMerchantFeedback(merchantFeedback);
 	 }
 	 
-	 @GetMapping(value = "/order/getAllOrders")
+	 @GetMapping(value = "/order/getAllOrders/{merchantId}")
 	 public List<Order> getAllOrders(@PathVariable final long merchantId){
 		 return merchantService.displayAllOrders(merchantId);
+	 }
+	 
+	 @GetMapping(value = "product/searchProducts/{merchantId}")
+	 public List<Product> searchProducts(@RequestBody final Category category,@PathVariable final long merchantId){
+		 String gender = category.getCategoryGender();
+		 String categoryType = category.getCategoryType();
+		 return merchantService.searchProducts(merchantId, categoryType);
+		 
 	 }
 	 
 	 
