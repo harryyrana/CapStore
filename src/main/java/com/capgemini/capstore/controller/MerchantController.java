@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.capgemini.capstore.beans.MerchantFeedback;
+import com.capgemini.capstore.beans.Order;
 import com.capgemini.capstore.beans.Product;
 import com.capgemini.capstore.service.IMerchantService;
 
@@ -32,9 +33,9 @@ public class MerchantController {
 		 
 	 }
 	 
-	 @GetMapping(value = "/product/findByMerchantId/{merchantId}")
-	 public List<Product> findByMerchant(@PathVariable final long merchantId) {
-		 return merchantService.findByMerchantId(merchantId);
+	 @GetMapping(value = "/product/getProductsByMerchantId/{merchantId}")
+	 public List<Product> getProductsByMerchant(@PathVariable final long merchantId) {
+		 return merchantService.getProductsByMerchantId(merchantId);
 	 }
 	 
 	 @PutMapping(value = "/product/addDiscount")
@@ -66,6 +67,12 @@ public class MerchantController {
 	 public MerchantFeedback sendMerchantFeedback(@RequestBody final MerchantFeedback merchantFeedback) {
 		 return merchantService.sendMerchantFeedback(merchantFeedback);
 	 }
+	 
+	 @GetMapping(value = "/order/getAllOrders")
+	 public List<Order> getAllOrders(@PathVariable final long merchantId){
+		 return merchantService.displayAllOrders(merchantId);
+	 }
+	 
 	 
 	 
 	

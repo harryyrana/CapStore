@@ -10,7 +10,7 @@ import com.capgemini.capstore.beans.Order;
 
 public interface OrderDao extends JpaRepository<Order, Long> {
 
-	@Query("FROM Order as o WHERE o.product.merchant =?1")
-	List<Order> getOrdersByMerchant(Merchant merchant);
+	@Query("SELECT o FROM Order o WHERE o.product.merchant.merchantId =?1")
+	List<Order> getOrdersByMerchant(long merchantId);
 
 }

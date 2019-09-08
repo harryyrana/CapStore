@@ -13,6 +13,9 @@ import com.capgemini.capstore.beans.Stock;
 @Transactional
 public interface StockDao extends JpaRepository<Stock, Long> {
 	
+	@Query("SELECT s FROM Stock s WHERE s.product.productId = ?1")
+	Stock findStockByProductId(long productId);
+	
 	@Modifying(clearAutomatically = true)
 	@Query("UPDATE Stock s SET s.totalQuantity = s.totalQuantity - ?1 WHERE s.product.productId = ?2")
 	void deleteQuantityByProductId(int quantity,long productId);

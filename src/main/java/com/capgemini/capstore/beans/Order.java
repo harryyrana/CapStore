@@ -22,7 +22,7 @@ public class Order {
 	private double totalAmount;
 	@OneToOne(fetch = FetchType.LAZY)
 	private Invoice invoice;
-	@ManyToMany(fetch = FetchType.LAZY)
+	@OneToOne(fetch = FetchType.LAZY)
 	private Product product;
 
 	@Override

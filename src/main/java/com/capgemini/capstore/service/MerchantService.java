@@ -7,11 +7,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.capgemini.capstore.beans.MerchantFeedback;
+import com.capgemini.capstore.beans.Order;
 import com.capgemini.capstore.beans.Product;
 import com.capgemini.capstore.beans.Stock;
 import com.capgemini.capstore.dao.MerchantFeedbackDao;
+import com.capgemini.capstore.dao.OrderDao;
 import com.capgemini.capstore.dao.ProductDao;
 import com.capgemini.capstore.dao.StockDao;
+import com.capgemini.capstore.exceptions.ResourceNotFoundException;
+import com.capgemini.capstore.exceptions.WrongUserInputException;
 
 @Service
 public class MerchantService implements IMerchantService {
@@ -24,9 +28,16 @@ public class MerchantService implements IMerchantService {
 	
 	@Autowired
 	private MerchantFeedbackDao merchantFeedbackDao;
+	
+	@Autowired
+	private OrderDao orderDao;
 
 	@Override
 	public Product addProduct(Product product,int quantity) {
+		
+		if(quantity <= 0) {
+			throw new WrongUserInputException("Quantity must be greater than 0.");
+		}
 
 
 		Product returnProductData =  productDao.save(product);
@@ -46,9 +57,7 @@ public class MerchantService implements IMerchantService {
 	}
 
 	@Override
-	public List<Product> findByMerchantId(long merchantId) {
-		
-		System.out.println(merchantId);
+	public List<Product> getProductsByMerchantId(long merchantId) {
 		
 		return productDao.findProductByMerchant(merchantId);
 	}
@@ -56,7 +65,7 @@ public class MerchantService implements IMerchantService {
 	@Override
 	public Product updateDiscount(Product product) {
 		if(!productDao.existsById(product.getProductId())) {
-			return null;
+			throw new ResourceNotFoundException("Product Not Found.");
 		}
 		Optional<Product> optionalProduct =  productDao.findById(product.getProductId());
 		Product currentProduct = optionalProduct.get();
@@ -68,7 +77,7 @@ public class MerchantService implements IMerchantService {
 	@Override
 	public boolean removeProduct(Product product) {
 		if(!productDao.existsById(product.getProductId())) {
-			return false;
+			throw new ResourceNotFoundException("Given product ID is not available.");
 		}
 		
 		productDao.deleteById(product.getProductId());
@@ -79,6 +88,18 @@ public class MerchantService implements IMerchantService {
 	@Override
 	public boolean deleteProductQuantity(int quantity,long productId) {
 
+		if(quantity <= 0) {
+			throw new WrongUserInputException("Please enter valid quantity.");
+		}
+		Stock currentStock = stockDao.findStockByProductId(productId);
+		if(currentStock.getTotalQuantity() < quantity ) {
+			throw new WrongUserInputException("Please enter valid quantity.");
+		}
+//		if(currentStock.getTotalQuantity() == quantity) {
+//			productDao.deleteById(productId);
+//			return true;
+//		}
+		
 		stockDao.deleteQuantityByProductId(quantity,productId);
 		
 		return true;
@@ -86,7 +107,10 @@ public class MerchantService implements IMerchantService {
 
 	@Override
 	public boolean addProductQuantity(int quantity, long productId) {
-		
+		if(quantity <= 0 || quantity >= 1000) {
+			throw new WrongUserInputException("Quantity must be between 1 to 1000");
+		}
+			
 		stockDao.addQuantityByProductId(quantity,productId);
 		
 		return true;
@@ -94,11 +118,16 @@ public class MerchantService implements IMerchantService {
 
 	@Override
 	public List<MerchantFeedback> getMerchantFeedback(long merchantId) {
+		
 		return merchantFeedbackDao.findMerchantFeedbackByMerchantId(merchantId);
+	
 	}
 
 	@Override
 	public MerchantFeedback sendMerchantFeedback(MerchantFeedback merchantFeedback) {
+		if(merchantFeedback.getResponse().length() == 0) {
+			throw new WrongUserInputException("Please add some response");
+		}
 		
 		Optional<MerchantFeedback> optionalMerchantFeedback = merchantFeedbackDao.findById(merchantFeedback.getId());
 		
@@ -108,6 +137,12 @@ public class MerchantService implements IMerchantService {
 		
 		
 		return merchantFeedbackDao.save(merchantFeedbackObj);
+	}
+
+	@Override
+	public List<Order> displayAllOrders(long merchantId) {
+				
+		return orderDao.getOrdersByMerchant(merchantId);
 	}
 	
 	

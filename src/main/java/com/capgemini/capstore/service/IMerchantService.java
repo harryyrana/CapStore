@@ -3,13 +3,14 @@ package com.capgemini.capstore.service;
 import java.util.List;
 
 import com.capgemini.capstore.beans.MerchantFeedback;
+import com.capgemini.capstore.beans.Order;
 import com.capgemini.capstore.beans.Product;
 
 public interface IMerchantService {
 	
 	Product addProduct(Product product,int quantity);
 	
-	List<Product> findByMerchantId(long merchantId);
+	List<Product> getProductsByMerchantId(long merchantId);
 	
 	Product updateDiscount(Product product);
 	
@@ -22,6 +23,8 @@ public interface IMerchantService {
 	List<MerchantFeedback> getMerchantFeedback(long merchantId);
 	
 	MerchantFeedback sendMerchantFeedback(MerchantFeedback merchantFeedback);
+	
+	List<Order> displayAllOrders(long merchantId);
 	
 
 }
