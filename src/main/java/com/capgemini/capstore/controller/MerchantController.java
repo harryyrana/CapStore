@@ -74,14 +74,22 @@ public class MerchantController {
 		 return merchantService.displayAllOrders(merchantId);
 	 }
 	 
-	 @GetMapping(value = "product/searchProducts/{merchantId}")
-	 public List<Product> searchProducts(@RequestBody final Category category,@PathVariable final long merchantId){
-		 String gender = category.getCategoryGender();
-		 String categoryType = category.getCategoryType();
-		 return merchantService.searchProducts(merchantId, categoryType);
-		 
-	 }
+	 @GetMapping(value = "/product/searchProducts/{merchantId}/{productName}")
+     public List<Product> searchProducts(@PathVariable final long merchantId,@PathVariable final String productName){
+         //String gender = category.getCategoryGender();
+//         String categoryType = category.getCategoryType();
+         return merchantService.searchProducts(merchantId, productName);
+        
+     }
 	 
+//	 @GetMapping(value = "product/searchProducts/{merchantId}")
+//	 public List<Product> searchProducts(@RequestBody final Category category,@PathVariable final long merchantId){
+//		 String gender = category.getCategoryGender();
+//		 String categoryType = category.getCategoryType();
+//		 return merchantService.searchProducts(merchantId, categoryType);
+//		 
+//	 }
+//	 
 	 
 	 
 	
