@@ -3,6 +3,7 @@ package com.capgemini.capstore.controller;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,6 +18,7 @@ import com.capgemini.capstore.service.IMerchantProfileService;
 
 @RestController
 @RequestMapping("/merchant")
+@CrossOrigin(origins = "http://localhost:4200")
 public class MerchantProfileController {
 	
 	@Autowired

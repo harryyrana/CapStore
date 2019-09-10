@@ -2,6 +2,7 @@ package com.capgemini.capstore.service;
 
 import java.util.List;
 
+import com.capgemini.capstore.beans.Category;
 import com.capgemini.capstore.beans.MerchantFeedback;
 import com.capgemini.capstore.beans.Order;
 import com.capgemini.capstore.beans.Product;
@@ -29,5 +30,5 @@ public interface IMerchantService {
 	
 	List<Stock> searchProducts(long merchantId,String categoryType);
 	
-
+	List<Category> getCategories();
 }

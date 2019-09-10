@@ -7,10 +7,12 @@ import java.util.regex.Pattern;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.capgemini.capstore.beans.Category;
 import com.capgemini.capstore.beans.MerchantFeedback;
 import com.capgemini.capstore.beans.Order;
 import com.capgemini.capstore.beans.Product;
 import com.capgemini.capstore.beans.Stock;
+import com.capgemini.capstore.dao.CategoryDao;
 import com.capgemini.capstore.dao.MerchantFeedbackDao;
 import com.capgemini.capstore.dao.OrderDao;
 import com.capgemini.capstore.dao.ProductDao;
@@ -32,6 +34,9 @@ public class MerchantService implements IMerchantService {
 	
 	@Autowired
 	private OrderDao orderDao;
+	
+	@Autowired
+	private CategoryDao categoryDao;
 
 	@Override
 	public Product addProduct(Product product,int quantity) {
@@ -161,6 +166,11 @@ public class MerchantService implements IMerchantService {
     public List<Stock> searchProducts(long merchantId, String productName) {
         return stockDao.searchProducts(merchantId, productName);
     }
+
+	@Override
+	public List<Category> getCategories() {
+		return categoryDao.findAll();
+	}
 	
 	
 	

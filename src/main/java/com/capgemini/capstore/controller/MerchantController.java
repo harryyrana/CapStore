@@ -84,6 +84,11 @@ public class MerchantController {
         
      }
 	 
+	 @GetMapping(value = "/product/categories")
+	 public List<Category> getCategories(){
+		 return merchantService.getCategories();
+	 }
+	 
 //	 @GetMapping(value = "product/searchProducts/{merchantId}")
 //	 public List<Product> searchProducts(@RequestBody final Category category,@PathVariable final long merchantId){
 //		 String gender = category.getCategoryGender();
