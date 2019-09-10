@@ -3,6 +3,7 @@ package com.capgemini.capstore.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,11 +17,12 @@ import com.capgemini.capstore.beans.Category;
 import com.capgemini.capstore.beans.MerchantFeedback;
 import com.capgemini.capstore.beans.Order;
 import com.capgemini.capstore.beans.Product;
+import com.capgemini.capstore.beans.Stock;
 import com.capgemini.capstore.service.IMerchantService;
 
 @RestController
 @RequestMapping("/merchant")
-//@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "http://localhost:4200")
 public class MerchantController {
 	
 	
@@ -35,7 +37,7 @@ public class MerchantController {
 	 }
 	 
 	 @GetMapping(value = "/product/getProductsByMerchantId/{merchantId}")
-	 public List<Product> getProductsByMerchant(@PathVariable final long merchantId) {
+	 public List<Stock> getProductsByMerchant(@PathVariable final long merchantId) {
 		 return merchantService.getProductsByMerchantId(merchantId);
 	 }
 	 
@@ -44,18 +46,18 @@ public class MerchantController {
 		 return merchantService.updateDiscount(product);
 	 }
 	 
-	 @DeleteMapping(value = "/product/deleteProduct")
-	 public boolean deleteProduct(@RequestBody final Product product) {
-		 return merchantService.removeProduct(product);
+	 @DeleteMapping(value = "/product/deleteProduct/productId/{productId}")
+	 public boolean deleteProduct(@PathVariable final long productId) {
+		 return merchantService.removeProduct(productId);
 	 }
 	 
 	 @PutMapping(value = "/product/deleteProductQuantity/{productId}/{quantity}")
-	 public boolean deleteProductQuantity(@PathVariable final long productId,@PathVariable final int quantity) {
+	 public Product deleteProductQuantity(@PathVariable final long productId,@PathVariable final int quantity) {
 		 return merchantService.deleteProductQuantity(quantity,productId);
 	 }
 	 
 	 @PutMapping(value = "/product/addProductQuantity/{productId}/{quantity}")
-	 public boolean addProductQuantity(@PathVariable final long productId,@PathVariable final int quantity) {
+	 public Product addProductQuantity(@PathVariable final long productId,@PathVariable final int quantity) {
 		 return merchantService.addProductQuantity(quantity,productId);
 	 }
 	 
@@ -75,7 +77,7 @@ public class MerchantController {
 	 }
 	 
 	 @GetMapping(value = "/product/searchProducts/{merchantId}/{productName}")
-     public List<Product> searchProducts(@PathVariable final long merchantId,@PathVariable final String productName){
+     public List<Stock> searchProducts(@PathVariable final long merchantId,@PathVariable final String productName){
          //String gender = category.getCategoryGender();
 //         String categoryType = category.getCategoryType();
          return merchantService.searchProducts(merchantId, productName);

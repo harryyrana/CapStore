@@ -2,6 +2,7 @@ package com.capgemini.capstore.service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.regex.Pattern;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -57,36 +58,44 @@ public class MerchantService implements IMerchantService {
 	}
 
 	@Override
-	public List<Product> getProductsByMerchantId(long merchantId) {
-		
-		return productDao.findProductByMerchant(merchantId);
+	public List<Stock> getProductsByMerchantId(long merchantId) {
+		return stockDao.findByMerchantId(merchantId);
+//		return productDao.findProductByMerchant(merchantId);
 	}
 
 	@Override
 	public Product updateDiscount(Product product) {
 		if(!productDao.existsById(product.getProductId())) {
+			
 			throw new ResourceNotFoundException("Product Not Found.");
+		}
+		if(product.getProductDiscount() < 0 || product.getProductDiscount() > 100) {
+			
+			throw new WrongUserInputException("Invalid discount.");
 		}
 		Optional<Product> optionalProduct =  productDao.findById(product.getProductId());
 		Product currentProduct = optionalProduct.get();
 		currentProduct.setProductDiscount(product.getProductDiscount());
+		currentProduct.setProductPrice(currentProduct.getProductPrice()-(currentProduct.getProductPrice()*(product.getProductDiscount()/100)));
 
 		return productDao.save(currentProduct);
 	}
 
 	@Override
-	public boolean removeProduct(Product product) {
-		if(!productDao.existsById(product.getProductId())) {
+	public boolean removeProduct(long productId) {
+		if(!productDao.existsById(productId)) {
 			throw new ResourceNotFoundException("Given product ID is not available.");
 		}
-		
-		productDao.deleteById(product.getProductId());
-		
+		//remove merchant id coz not using
+		productDao.deleteById(productId);
+		if(productDao.existsById(productId)) {
+			return false;
+		}
 		return true;
 	}
 
 	@Override
-	public boolean deleteProductQuantity(int quantity,long productId) {
+	public Product deleteProductQuantity(int quantity,long productId) {
 
 		if(quantity <= 0) {
 			throw new WrongUserInputException("Please enter valid quantity.");
@@ -101,19 +110,22 @@ public class MerchantService implements IMerchantService {
 //		}
 		
 		stockDao.deleteQuantityByProductId(quantity,productId);
-		
-		return true;
+		Optional<Product> optionalProduct = productDao.findById(productId);
+		Product product = optionalProduct.get();
+		return product;
 	}
 
 	@Override
-	public boolean addProductQuantity(int quantity, long productId) {
+	public Product addProductQuantity(int quantity, long productId) {
 		if(quantity <= 0 || quantity >= 1000) {
 			throw new WrongUserInputException("Quantity must be between 1 to 1000");
 		}
 			
 		stockDao.addQuantityByProductId(quantity,productId);
 		
-		return true;
+		Optional<Product> optionalProduct = productDao.findById(productId);
+		Product product = optionalProduct.get();
+		return product;
 	}
 
 	@Override
@@ -146,8 +158,8 @@ public class MerchantService implements IMerchantService {
 	}
 
 	@Override
-    public List<Product> searchProducts(long merchantId, String productName) {
-        return productDao.searchProduct(merchantId, productName);
+    public List<Stock> searchProducts(long merchantId, String productName) {
+        return stockDao.searchProducts(merchantId, productName);
     }
 	
 	

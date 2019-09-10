@@ -5,20 +5,21 @@ import java.util.List;
 import com.capgemini.capstore.beans.MerchantFeedback;
 import com.capgemini.capstore.beans.Order;
 import com.capgemini.capstore.beans.Product;
+import com.capgemini.capstore.beans.Stock;
 
 public interface IMerchantService {
 	
 	Product addProduct(Product product,int quantity);
 	
-	List<Product> getProductsByMerchantId(long merchantId);
+	List<Stock> getProductsByMerchantId(long merchantId);
 	
 	Product updateDiscount(Product product);
 	
-	boolean removeProduct(Product product);
+	boolean removeProduct(long productId);
 	
-	boolean deleteProductQuantity(int quantity,long productId);
+	Product deleteProductQuantity(int quantity,long productId);
 	
-	boolean addProductQuantity(int quantity,long productId);
+	Product addProductQuantity(int quantity,long productId);
 	
 	List<MerchantFeedback> getMerchantFeedback(long merchantId);
 	
@@ -26,7 +27,7 @@ public interface IMerchantService {
 	
 	List<Order> displayAllOrders(long merchantId);
 	
-	List<Product> searchProducts(long merchantId,String categoryType);
+	List<Stock> searchProducts(long merchantId,String categoryType);
 	
 
 }

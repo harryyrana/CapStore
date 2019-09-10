@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+import com.capgemini.capstore.exceptions.ResourceNotFoundException;
+import com.capgemini.capstore.exceptions.UnauthorizedException;
 import com.capgemini.capstore.exceptions.WrongUserInputException;
 
 
@@ -25,27 +27,27 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 		return new ResponseEntity<ExceptionResponse>(exceptionResponse, HttpStatus.BAD_REQUEST);
 
 	}
-//	
-//	@ExceptionHandler(InvalidAuthentication.class)
-//	public final ResponseEntity<ExceptionResponse> handleInvalidAuthentication(InvalidAuthentication ex, WebRequest req) {
-//
-//		ExceptionResponse exceptionResponse = new ExceptionResponse(new Date(), ex.getMessage(),
-//
-//				req.getDescription(false), HttpStatus.UNAUTHORIZED.getReasonPhrase());
-//
-//		return new ResponseEntity<ExceptionResponse>(exceptionResponse, HttpStatus.UNAUTHORIZED);
-//
-//	}
-//
-//	@ExceptionHandler(UnauthorizedException.class)
-//	public final ResponseEntity<ExceptionResponse> handleUnathorizedException(UnauthorizedException ex, WebRequest req) {
-//
-//		ExceptionResponse exceptionResponse = new ExceptionResponse(new Date(), ex.getMessage(),
-//
-//				req.getDescription(false), HttpStatus.FORBIDDEN.getReasonPhrase());
-//
-//		return new ResponseEntity<ExceptionResponse>(exceptionResponse, HttpStatus.FORBIDDEN);
-//
-//	}
+	
+	@ExceptionHandler(ResourceNotFoundException.class)
+	public final ResponseEntity<ExceptionResponse> handleResourceNotFoundException(ResourceNotFoundException ex, WebRequest req) {
+
+		ExceptionResponse exceptionResponse = new ExceptionResponse(new Date(), ex.getMessage(),
+
+				req.getDescription(false), HttpStatus.UNAUTHORIZED.getReasonPhrase());
+
+		return new ResponseEntity<ExceptionResponse>(exceptionResponse, HttpStatus.UNAUTHORIZED);
+
+	}
+
+	@ExceptionHandler(UnauthorizedException.class)
+	public final ResponseEntity<ExceptionResponse> handleUnathorizedException(UnauthorizedException ex, WebRequest req) {
+
+		ExceptionResponse exceptionResponse = new ExceptionResponse(new Date(), ex.getMessage(),
+
+				req.getDescription(false), HttpStatus.FORBIDDEN.getReasonPhrase());
+
+		return new ResponseEntity<ExceptionResponse>(exceptionResponse, HttpStatus.FORBIDDEN);
+
+	}
 
 }
