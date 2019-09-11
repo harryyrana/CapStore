@@ -89,6 +89,15 @@ public class MerchantController {
 		 return merchantService.getCategories();
 	 }
 	 
+//	 @PutMapping(value = "/product/updateDiscount/{discount}")
+//	 public boolean updateProductDiscountByCategoryType(@PathVariable final double discount,@RequestBody final Product product){
+//		 long merchantId = product.getMerchant().getMerchantId();
+//		 String categoryType = product.getCategory().getCategoryType();
+//		 System.out.println(merchantId);
+//		 System.out.println(categoryType);
+//		 return merchantService.updateProductDiscount(discount, merchantId, categoryType);
+//	 }
+	 
 //	 @GetMapping(value = "product/searchProducts/{merchantId}")
 //	 public List<Product> searchProducts(@RequestBody final Category category,@PathVariable final long merchantId){
 //		 String gender = category.getCategoryGender();

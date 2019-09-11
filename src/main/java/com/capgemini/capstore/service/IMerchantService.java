@@ -31,4 +31,6 @@ public interface IMerchantService {
 	List<Stock> searchProducts(long merchantId,String categoryType);
 	
 	List<Category> getCategories();
+	
+//	boolean updateProductDiscount(double productDiscount,long merchantId,String categoryType);
 }

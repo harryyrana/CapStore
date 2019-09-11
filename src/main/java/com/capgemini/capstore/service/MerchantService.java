@@ -18,6 +18,7 @@ import com.capgemini.capstore.dao.OrderDao;
 import com.capgemini.capstore.dao.ProductDao;
 import com.capgemini.capstore.dao.StockDao;
 import com.capgemini.capstore.exceptions.ResourceNotFoundException;
+import com.capgemini.capstore.exceptions.UnsuccessfullOperations;
 import com.capgemini.capstore.exceptions.WrongUserInputException;
 
 @Service
@@ -44,8 +45,14 @@ public class MerchantService implements IMerchantService {
 		if(quantity <= 0) {
 			throw new WrongUserInputException("Quantity must be greater than 0.");
 		}
-
-
+		if(product.getProductDiscount() < 0 || product.getProductDiscount() > 100) {
+			throw new WrongUserInputException("Discount must be between 0 and 100");
+		}
+		if(product.getProductPrice() < 9 || product.getProductPrice() > 99999) {
+			throw new WrongUserInputException("Price must be between 9 and 99999");
+		}
+		String convrtedName = product.getProductName().toLowerCase();
+		product.setProductName(convrtedName);
 		Product returnProductData =  productDao.save(product);
 		long productId = product.getProductId();
 		Optional<Product> optionalProduct = productDao.findById(productId);
@@ -54,7 +61,7 @@ public class MerchantService implements IMerchantService {
 		Stock currentProductStock = new Stock();
 		currentProductStock.setProduct(currentProduct);
 		currentProductStock.setTotalQuantity(quantity);
-		currentProductStock.setAvailable(1);
+		currentProductStock.setAvailable(quantity);
 		stockDao.save(currentProductStock);
 	
 		return returnProductData;
@@ -76,7 +83,7 @@ public class MerchantService implements IMerchantService {
 		}
 		if(product.getProductDiscount() < 0 || product.getProductDiscount() > 100) {
 			
-			throw new WrongUserInputException("Invalid discount.");
+			throw new WrongUserInputException("Discount Should be between 0 and 100.");
 		}
 		Optional<Product> optionalProduct =  productDao.findById(product.getProductId());
 		Product currentProduct = optionalProduct.get();
@@ -91,10 +98,10 @@ public class MerchantService implements IMerchantService {
 		if(!productDao.existsById(productId)) {
 			throw new ResourceNotFoundException("Given product ID is not available.");
 		}
-		//remove merchant id coz not using
+		
 		productDao.deleteById(productId);
 		if(productDao.existsById(productId)) {
-			return false;
+			throw new UnsuccessfullOperations("Server error");
 		}
 		return true;
 	}
@@ -164,13 +171,16 @@ public class MerchantService implements IMerchantService {
 
 	@Override
     public List<Stock> searchProducts(long merchantId, String productName) {
-        return stockDao.searchProducts(merchantId, productName);
+		String convertedProductName = productName.toLowerCase();
+        return stockDao.searchProducts(merchantId, convertedProductName);
     }
 
 	@Override
 	public List<Category> getCategories() {
 		return categoryDao.findAll();
 	}
+
+
 	
 	
 	

@@ -11,6 +11,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 
 import com.capgemini.capstore.exceptions.ResourceNotFoundException;
 import com.capgemini.capstore.exceptions.UnauthorizedException;
+import com.capgemini.capstore.exceptions.UnsuccessfullOperations;
 import com.capgemini.capstore.exceptions.WrongUserInputException;
 
 
@@ -49,5 +50,17 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 		return new ResponseEntity<ExceptionResponse>(exceptionResponse, HttpStatus.FORBIDDEN);
 
 	}
+	
+	@ExceptionHandler(UnsuccessfullOperations.class)
+	public final ResponseEntity<ExceptionResponse> handleUnsuccessfullOperations(UnsuccessfullOperations ex, WebRequest req) {
+
+		ExceptionResponse exceptionResponse = new ExceptionResponse(new Date(), ex.getMessage(),
+
+				req.getDescription(false), HttpStatus.NOT_IMPLEMENTED.getReasonPhrase());
+
+		return new ResponseEntity<ExceptionResponse>(exceptionResponse, HttpStatus.NOT_IMPLEMENTED);
+
+	}
+
 
 }
